@@ -231,6 +231,44 @@ if __name__ == '__main__':
     main()
 ```
 
+### Ejemplos avanzados incluidos en el repositorio
+
+Además de los ejemplos anteriores (carpetas `demo/` y `demoPy/`), este repositorio incluye dos ejemplos adicionales, más cercanos a escenarios reales:
+
+#### `demo-Exchange-Consumidor2/` — Exchange tipo `fanout`
+
+Un productor publica un mismo mensaje a un *exchange* `fanout` (`ARQ_SOFT_EXCHANGE`), que lo reparte a dos colas (`ARQ_SOFT_1`, `ARQ_SOFT_2`), cada una con su propio consumidor — así ambos consumidores reciben una copia del mismo mensaje, a diferencia del ejemplo básico donde solo un consumidor se queda con cada mensaje.
+
+```bash
+cd demo-Exchange-Consumidor2
+mvn compile
+# En dos terminales distintas:
+mvn exec:java -Dexec.mainClass=edu.unisabana.Consumer
+mvn exec:java -Dexec.mainClass=edu.unisabana.Consumer2
+# En una tercera terminal:
+mvn exec:java -Dexec.mainClass=edu.unisabana.Producer
+```
+
+Deberías ver el mismo mensaje recibido en ambas terminales de consumidores.
+
+#### `demo-API-Worker/` — Procesamiento asíncrono con API + Worker (Python, Docker Compose)
+
+Un ejemplo "antes/después": un servicio FastAPI expone `/sync` (procesa la petición y espera) y `/async` (encola el trabajo en RabbitMQ y responde de inmediato), mientras uno o más *workers* independientes consumen la cola `jobs` y hacen el procesamiento pesado en segundo plano. Levanta todo con Docker Compose (incluye RabbitMQ, la API y 3 réplicas del worker):
+
+```bash
+cd demo-API-Worker
+docker compose up --build
+```
+
+Prueba la diferencia entre ambos enfoques:
+
+```bash
+curl "http://localhost:8000/sync?ms=200"   # tarda ~200ms en responder
+curl "http://localhost:8000/async?ms=200"  # responde casi de inmediato ("queued")
+```
+
+El panel de RabbitMQ (`http://localhost:15672`, usuario/clave `guest`/`guest`) te permite ver la cola `jobs` y confirmar que los workers están consumiendo los mensajes.
+
 ### Paso 5: Resumen y Conclusión
 
 #### Resumen del Taller

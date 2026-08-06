@@ -1,0 +1,11 @@
+# Maven
+target/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS/IDE
+.DS_Store
+.idea/

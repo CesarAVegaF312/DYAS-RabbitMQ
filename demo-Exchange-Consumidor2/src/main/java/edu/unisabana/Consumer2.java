@@ -6,8 +6,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.DeliverCallback;
 
 
-public class Comsumer {
-    
+public class Consumer2 {
+
     public static void main(String[] args) {
         // crear una facbrica de conexiones
         ConnectionFactory factory = new ConnectionFactory();
@@ -20,15 +20,15 @@ public class Comsumer {
             Channel channel = connection.createChannel();
 
             // declarar una cola
-            channel.queueDeclare("ARQ_SOFT_1", false, false, false, null);
-            
+            channel.queueDeclare("ARQ_SOFT_2", false, false, false, null);
+
             // Crear un callback para recibir mensajes
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println(" [x] Received '" + message + "'");
             };
 
-            channel.basicConsume("ARQ_SOFT_1", true, deliverCallback, consumerTag -> {});
+            channel.basicConsume("ARQ_SOFT_2", true, deliverCallback, consumerTag -> {});
 
             System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
