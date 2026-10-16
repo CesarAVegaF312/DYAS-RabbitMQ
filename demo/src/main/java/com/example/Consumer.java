@@ -5,33 +5,54 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
+import java.nio.charset.StandardCharsets;
+
 public class Consumer {
+
+    private static final String QUEUE_NAME = "hello";
 
     public static void main(String[] args) {
 
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
 
-        try
-        {
+        try {
+
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
-            channel.queueDeclare("hello", false, false, false, null);
 
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), "UTF-8");
-                System.err.println(" [x] Received '" + message + "'");
-
-            };
-
-            channel.basicConsume("hello", true, deliverCallback, consumerTag -> { });
+            // Debe tener exactamente la misma configuración del Producer
+            channel.queueDeclare(
+                    QUEUE_NAME,
+                    true,   // durable
+                    false,  // exclusive
+                    false,  // autoDelete
+                    null
+            );
 
             System.out.println(" [*] Waiting for messages. To exit press Ctrl+C");
-            
 
-        }catch(Exception e)
-        {
+            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+
+                String message = new String(
+                        delivery.getBody(),
+                        StandardCharsets.UTF_8
+                );
+
+                System.out.println(" [x] Received '" + message + "'");
+            };
+
+            channel.basicConsume(
+                    QUEUE_NAME,
+                    true,   // autoAck
+                    deliverCallback,
+                    consumerTag -> {
+                    }
+            );
+
+        } catch (Exception e) {
+            System.err.println("Error consumiendo mensajes:");
             e.printStackTrace();
         }
-    }  
+    }
 }
