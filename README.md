@@ -286,3 +286,21 @@ RabbitMQ es una herramienta poderosa para la mensajería asincrónica y la integ
 4. Experimenta con otros casos de uso para profundizar en tu comprensión de RabbitMQ.
 
 Este taller proporciona una base sólida para comenzar a trabajar con RabbitMQ y fomenta la creación de ejemplos propios para reforzar el aprendizaje.
+
+---
+
+## Créditos y uso académico
+
+**Autor:** César Augusto Vega Fernández  
+**Curso:** Diseño y Arquitectura de Software  
+**Programa:** Ingeniería Informática – Universidad de La Sabana
+
+### Licencia de uso
+
+Este material se distribuye bajo la licencia [Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es). El texto completo está en el archivo [`LICENSE`](LICENSE).
+
+Puedes **usar, adaptar o compartir** este contenido con fines educativos, siempre que:
+
+1. Se reconozca la autoría del profesor **César Augusto Vega Fernández**.
+2. No se utilice con fines comerciales.
+3. Las obras derivadas se distribuyan bajo la misma licencia.
