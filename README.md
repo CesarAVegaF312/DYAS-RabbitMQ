@@ -53,8 +53,7 @@ El objetivo de este taller es aprender a utilizar RabbitMQ para la mensajería a
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>21</release>
                 </configuration>
             </plugin>
         </plugins>
@@ -268,6 +267,20 @@ curl "http://localhost:8000/async?ms=200"  # responde casi de inmediato ("queued
 ```
 
 El panel de RabbitMQ (`http://localhost:15672`, usuario/clave `guest`/`guest`) te permite ver la cola `jobs` y confirmar que los workers están consumiendo los mensajes.
+
+### Criterios de evaluación
+
+* Ambiente.
+	1. RabbitMQ está en ejecución y su panel de administración (`http://localhost:15672`) es accesible.
+* Funcionalidad.
+	1. El productor y el consumidor básicos (Java o Python) intercambian mensajes por la cola.
+	2. En `demo-Exchange-Consumidor2`, los dos consumidores reciben una copia del mismo mensaje.
+	3. En `demo-API-Worker`, `/async` responde sin esperar el procesamiento y los workers consumen la cola `jobs`.
+* Ejemplo propio.
+	1. Implementa un caso de uso propio con productor y consumidor, con el código comentado.
+	2. Usa al menos un elemento que no esté en el ejemplo básico: cola durable con mensajes persistentes, confirmación manual (`ack`) o un exchange `direct` o `topic`.
+* Evidencia.
+	1. Un `INFORME.md` con capturas del panel donde se vean las colas y los mensajes, y una explicación de qué pasa con los mensajes si el consumidor se detiene.
 
 ### Paso 5: Resumen y Conclusión
 
